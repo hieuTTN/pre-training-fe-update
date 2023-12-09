@@ -1,0 +1,99 @@
+.menutop{
+    background-color: #F9F9F9;
+}
+.listmenutop{
+    display: flex;
+    align-items: center;
+    height: 4.25rem;
+    font-size: 0.875rem;
+}
+.imglogo{
+    margin-right: 1.5rem;
+    height: 60%;
+    margin-left: 10px;
+}
+.searchheader{
+    border-radius: 50rem;
+    border: 1px solid #e3e3e3;
+    width: 17rem;
+    background-color: #fff;
+    padding-left: 10px;
+    height: 2.25rem;
+}
+.inputsearchheader{
+    width: 80%;
+    border: none;
+    background-color: none;
+    margin-top: 5px;
+}
+.inputsearchheader:focus{
+    outline: none;
+}
+.btnsearchheader{
+    background: none;
+    border: none;
+    margin-left: 120px;
+    width: 20%;
+}
+.iconsearchheader{
+    font-size: 1.3125rem;
+    width: 0.9523809524em;
+    vertical-align: middle;
+    margin-top: 5px;
+}
+.hotline-item {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem 0.5rem 0.5rem;
+    background-color: #fff;
+    border-radius: 3.4375rem;
+    font-size: 0.75rem;
+    transition: all 0.2s ease-in-out;
+    color: #000;
+    text-decoration: none;
+    font-weight: 400;
+    cursor: pointer;
+}
+.itemphone{
+    margin-right: 2rem;
+}
+.menubottom{
+    background-color: #fff;
+}
+.navbar .navbar-nav {
+    justify-content: space-between;
+    flex-grow: 1;
+}
+.nav-link{
+    color: #000;
+    font-size: 1rem;
+    font-weight: 550;
+}
+.bannerweb{
+    width: 100%;
+}
+.nav-link:hover{
+    color: red;
+}
+.logoutitem{
+    cursor: pointer;
+}
+.tablists{
+    list-style: none;
+    display: flex;
+    padding: 0px;
+}
+.tab-item{
+    cursor: pointer;
+    margin-right: 15px;
+    background-color: #edebeb;
+    padding: 5px 15px 5px 15px;
+}
+
+.react-tabs__tab--selected{
+    color: red;
+    border-bottom: 6px solid #2D8ECE;
+    font-weight: bold;
+    background-color: #d9d4d4;
+    color: #000;
+}
