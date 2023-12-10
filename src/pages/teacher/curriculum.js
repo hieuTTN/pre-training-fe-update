@@ -21,7 +21,7 @@ async function loadSubject(param){
     if(param == null){
         param = "";
     }
-    var url = 'http://localhost:8080/api/subject-faculty/lecture/get-subject-facultyId-or-name?search='+param;
+    var url = 'http://localhost:8080/api/subject-major/lecture/get-subject-majorId-or-name?search='+param;
     const response = await fetch(url, {
         method: 'GET',
         headers: new Headers({
@@ -50,6 +50,7 @@ function LoadCurriculum(){
         };
         getSubject();
     }, []);
+    console.log(itemSubject);
 
     async function searchByParam(){
         var param = "";
@@ -99,6 +100,9 @@ function LoadCurriculum(){
                             <th>STT</th>
                             <th>Mã môn học</th>
                             <th>Tên môn học</th>
+                            <th>Học kỳ</th>
+                            <th>Năm học</th>
+                            <th>Bộ môn</th>
                             <th>Số TC</th>
                             <th>Số LT</th>
                             <th>Số TH</th>
@@ -112,6 +116,9 @@ function LoadCurriculum(){
                             <td>{index+1}</td>
                             <td>{item.subject.subjectCode}</td>
                             <td>{item.subject.name}</td>
+                            <td>{item.semester}</td>
+                            <td>{item.schoolYear}</td>
+                            <td>{item.major.name}</td>
                             <td>{item.subject.creditNum}</td>
                             <td>{item.subject.theoryNum}</td>
                             <td>{item.subject.practicalNum}</td>
