@@ -1,5 +1,6 @@
 import styles from './header.scss';
 import logo from '../../../assest/images/logo.png';
+import {handleChangePass} from '../../../services/auth'
 
 function logout(){
     localStorage.removeItem("token");
@@ -36,6 +37,7 @@ function header (){
                     </a>
                     <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                     {acc}
+                    <li><a data-bs-toggle="modal" data-bs-target="#changepassword" className="dropdown-item logoutitem">Đổi mật khẩu</a></li>
                     <li><a className="dropdown-item logoutitem" onClick={logout}>Đăng xuất</a></li>
                     </ul>
                 </li>
@@ -101,6 +103,25 @@ function header (){
             </nav>
             </div>
         </div>
+        <div class="modal fade" id="changepassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="false">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Đổi mật khẩu</h5> <button id='btnclosemodal' type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                        <div class="modal-body row">
+                            <form method='post' onSubmit={handleChangePass}>
+                                <label class="lbacc">Mật khẩu hiện tại *</label>
+                                <input required name='currentpass' type="password" class="form-control" />
+                                <label class="lbacc">Mật khẩu mới *</label>
+                                <input required name='newpass' type="password" class="form-control"/>
+                                <label class="lbacc">Xác nhận mật khẩu mới *</label>
+                                <input required name='renewpass' type="password" class="form-control"/>
+                                <button type="submit" class="btntt">LƯU</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 

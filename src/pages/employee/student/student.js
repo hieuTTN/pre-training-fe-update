@@ -136,11 +136,13 @@ function EmployeeStudent(){
     const [pageCount, setpageCount] = useState(0);
     const [itemFaculty, setItemFaculty] = useState([]);
     const [itemClass, setItemClass] = useState([]);
+    const [numStudent, setNumStudent] = useState(0);
     const [studentCard, setStudentCard] = useState(null);
     useEffect(()=>{
         const getStudent = async(page) =>{
             const response = await loadAllStudent(page,null,null);
             var result = await response.json();
+            setNumStudent(result.totalElements);
             var totalPage = result.totalPages;
             setItems(result.content)
             setpageCount(totalPage);
@@ -160,6 +162,7 @@ function EmployeeStudent(){
     const fetchStudent = async (page) => {
         const res = await loadAllStudentByUrl(page);
         var result = await res.json();
+        setNumStudent(result.totalElements);
         var totalPage = result.totalPages;
         setItems(result.content)
         setpageCount(totalPage);
@@ -246,6 +249,9 @@ function EmployeeStudent(){
                         getOptionLabel={(itemClass)=>itemClass.name} 
                         getOptionValue={(itemClass)=>itemClass.classId} 
                         placeholder='chọn lớp'/>
+                    </div>
+                    <div className='col-sm-6 divtsv'>
+                        <p className='tongsv'>Tổng sinh viên {numStudent}</p>
                     </div>
                 </div>
             </div>

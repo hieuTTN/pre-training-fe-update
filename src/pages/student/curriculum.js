@@ -3,6 +3,7 @@ import ReactPaginate from 'react-paginate';
 import {toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AsyncSelect from 'react-select/async';
+import {requestGet, requestPost} from '../../services/request';
 
 var token = localStorage.getItem('token');
 
@@ -18,17 +19,49 @@ async function loadStudentByToken(){
 }
 
 async function loadSubject(param){
+    var url = 'http://localhost:8080/api/student/student/my-infor';
+    const res = await fetch(url, {
+        method: 'POST',
+        headers: new Headers({
+            'Authorization': 'Bearer ' + token,
+        })
+    });
+    var std = await res.json();
+    var namhoc = std.academicYear;
     if(param == null){
         param = "";
     }
-    var url = 'http://localhost:8080/api/subject-faculty/student/get-subject-facultyId-or-name?search='+param;
+    var url = 'http://localhost:8080/api/subject-major/student/get-subject-classId-or-name?search='+param;
     const response = await fetch(url, {
         method: 'GET',
         headers: new Headers({
             'Authorization': 'Bearer ' + token,
         })
     });
-    return response;
+    var list = await response.json();
+    console.log(list);
+    var main = '';
+    var index = 0;
+    for(var i=0; i< list.length;i++){
+
+        var tennamhoc = (Number(namhoc)+Number(list[i][0].schoolYear)-1) +" - "+(Number(namhoc)+Number(list[i][0].schoolYear));
+
+        main += `<tr class="bkgd"><td colspan=8 class="bold-text">Học kỳ ${list[i][0].semester} , năm học ${tennamhoc}</td></tr>`
+        for(var j=0; j<list[i].length; j++){
+            main += `<tr>
+            <td>${++index}</td>
+            <td>${list[i][j].subject.subjectCode}</td>
+            <td>${list[i][j].subject.name}</td>
+            <td>${list[i][j].subject.creditNum}</td>
+            <td>${list[i][j].subject.theoryNum}</td>
+            <td>${list[i][j].subject.practicalNum}</td>
+            <td>${list[i][j].subject.numExercise}</td>
+            <td>${list[i][j].subject.prerequisite == null?"":list[i][j].subject.prerequisite.subjectCode}</td>
+            </tr>`
+        }
+    }
+    document.getElementById("listcur").innerHTML = main
+    // return response;
 }
 
 
@@ -45,11 +78,12 @@ function LoadCurriculum(){
         getMyInfor();
         const getSubject = async() =>{
             const response = await loadSubject(null);
-            var result = await response.json();
-            setItemSubject(result)
+            // var result = await response.json();
+            // setItemSubject(result)
         };
         getSubject();
     }, []);
+    console.log(itemSubject);
 
     async function searchByParam(){
         var param = "";
@@ -88,7 +122,7 @@ function LoadCurriculum(){
                         </tr>
                         <tr>
                             <td>Ngành</td>
-                            <td className='textblod'>{items==null?"":items.facultyName}</td>
+                            <td className='textblod'>{items==null?"":items.classes==null?items.facultyName:items.classes.major.name}</td>
                         </tr>
                         <tr>
                             <td>Khóa học</td>
@@ -103,7 +137,6 @@ function LoadCurriculum(){
             </div>
 
             <div className='ctdt-block'>
-                <input onKeyUp={searchByParam} id='searchtable' className='inputsearchdt' placeholder='Tìm kiém'/>
                 <table className='table tablectdt'>
                     <thead className='theadblue'>
                         <tr>
@@ -117,19 +150,14 @@ function LoadCurriculum(){
                             <th>Môn tiên quyết</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {itemSubject.map((item, index)=>{
-                            return <tr>
-                            <td>{index+1}</td>
-                            <td>{item.subject.subjectCode}</td>
-                            <td>{item.subject.name}</td>
-                            <td>{item.subject.creditNum}</td>
-                            <td>{item.subject.theoryNum}</td>
-                            <td>{item.subject.practicalNum}</td>
-                            <td>{item.subject.numExercise}</td>
-                            <td>{item.subject.prerequisite==null?"":item.subject.prerequisite.subjectCode}</td>
-                        </tr>
-                        })}
+                    <tbody id='listcur'>
+                        {/* {itemSubject.map((item)=>{
+                            {item.map((items, index)=>{
+                                return <tr>
+                                <td>1</td>
+                            </tr>
+                            })}
+                        })} */}
                     </tbody>
                 </table>
             </div>
